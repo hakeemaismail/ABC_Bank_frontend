@@ -57,9 +57,13 @@ export default function User() {
       )
       .then((response) => {
         console.log(response.data);
+        alert("The amount has been deposited");
+        window.location.href = "/user";
       })
       .catch((error) => {
         console.log(error);
+        alert("An error has occurred");
+        window.location.href = "/user";
       });
 
     setDepositModalOpen(false);
@@ -85,9 +89,13 @@ export default function User() {
       } )
       .then((response) => {
         console.log(response.data);
+        alert("The account has been created");
+        window.location.href = "/user";
       })
       .catch((error) => {
         console.log(error);
+        alert("An error has occurred");
+        window.location.href = "/user";
       });
 
     setCreateModalOpen(false);
@@ -109,9 +117,13 @@ export default function User() {
       .post("http://localhost:8080/api/v1/transferAmount", data)
       .then((response) => {
         console.log(response.data);
+        alert("The amount has been transferred");
+        window.location.href = "/user";
       })
       .catch((error) => {
         console.log(error);
+        alert("An error has occurred");
+        window.location.href = "/user";
       });
 
     setTransferModalOpen(false);
@@ -129,9 +141,13 @@ export default function User() {
       )
       .then((response) => {
         console.log(response.data);
+        alert("The amount has been withdrawn");
+        window.location.href = "/user";
       })
       .catch((error) => {
         console.log(error);
+        alert("An error has occurred");
+        window.location.href = "/user";
       });
 
     setWithdrawModalOpen(false);

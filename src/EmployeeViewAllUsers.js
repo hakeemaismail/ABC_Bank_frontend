@@ -25,17 +25,19 @@ export default function EmployeeViewUser() {
   }, []);
   
 
-  // const handleDelete = (id) => {
-  //   console.log(id);
-  //   axios
-  //     .delete(`localhost:8080/api/v1/auth/deleteUser/${id}`)
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const handleDelete = (id) => {
+    console.log(id);
+    axios
+      .delete(`http://localhost:8080/api/v1/auth/deleteUser/${id}`)
+      .then(() => {
+        console.log("deleted record");
+        alert("The record has been deleted");
+        window.location.href = "/employeeViewUser";
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div>
@@ -65,7 +67,7 @@ export default function EmployeeViewUser() {
             <th className="px-4 py-2">Last Name</th>
             <th className="px-4 py-2">Email</th>
             <th className="px-4 py-2">View</th>
-            {/* <th className="px-4 py-2">Delete</th> */}
+            <th className="px-4 py-2">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -85,12 +87,12 @@ export default function EmployeeViewUser() {
                   View Accounts
                 </button>
               </td>
-              {/* <td className="px-4 py-2">
+              <td className="px-4 py-2">
               <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700" onClick={() => handleDelete(user?.id)}
                 >
               Delete
             </button>
-              </td> */}
+              </td>
             </tr>
           )))}
         </tbody>

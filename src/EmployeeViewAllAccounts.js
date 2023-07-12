@@ -33,6 +33,8 @@ export default function AllAccounts() {
       .post(`http://localhost:8080/api/v1/clearAccount/${accountID}`)
       .then((response) => {
         console.log(response);
+        alert("The account has been cleared");
+        window.location.href = "/allAccounts";
       })
       .catch((error) => {
         console.log(error);
