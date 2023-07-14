@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 export default function User() {
   const handleLogout = () => {
@@ -57,13 +59,44 @@ export default function User() {
       )
       .then((response) => {
         console.log(response.data);
-        alert("The amount has been deposited");
-        window.location.href = "/user";
+        // alert("The amount has been deposited");
+        // window.location.href = "/user";
+
+        toast('The amount has been deposited', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+             {
+              setTimeout(() => {
+                window.location.href = "/user";
+              }, 1000); 
+            } 
+          },
+          });
       })
       .catch((error) => {
         console.log(error);
-        alert("An error has occurred");
-        window.location.href = "/user";
+        toast('An error has occurred', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+             {
+              setTimeout(() => {
+                window.location.href = "/user";
+              }, 1000); 
+            } 
+          },
+          });
       });
 
     setDepositModalOpen(false);
@@ -89,8 +122,24 @@ export default function User() {
       } )
       .then((response) => {
         console.log(response.data);
-        alert("The account has been created");
-        window.location.href = "/user";
+        //alert("The account has been created");
+        toast('Account has been created', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+            {
+             setTimeout(() => {
+               window.location.href = "/user";
+             }, 1000); 
+           } 
+         },
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -117,8 +166,25 @@ export default function User() {
       .post("http://localhost:8080/api/v1/transferAmount", data)
       .then((response) => {
         console.log(response.data);
-        alert("The amount has been transferred");
-        window.location.href = "/user";
+        // alert("The amount has been transferred");
+        // window.location.href = "/user";
+
+        toast('The amount has been transferred', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+             {
+              setTimeout(() => {
+                window.location.href = "/user";
+              }, 1000); 
+            } 
+          },
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -141,8 +207,25 @@ export default function User() {
       )
       .then((response) => {
         console.log(response.data);
-        alert("The amount has been withdrawn");
-        window.location.href = "/user";
+        // alert("The amount has been withdrawn");
+        // window.location.href = "/user";
+
+        toast('The amount has been withdrawn', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+             {
+              setTimeout(() => {
+                window.location.href = "/user";
+              }, 1000); 
+            } 
+          },
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -181,6 +264,8 @@ export default function User() {
       </header>
 
       <h2 className="text-4xl font-bold text-center py-4">All Accounts</h2>
+      
+      <ToastContainer />
 
       <div className="flex justify-center">
         {accounts.map((account) => (
@@ -237,6 +322,14 @@ export default function User() {
               >
                 View
               </button>
+              {/* <button
+                className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-700"
+                onClick={() => {
+                  navigate(`/transactionChart/${account?.accountID}`);
+                }}
+              >
+                Chart
+              </button> */}
             </div>
           </div>
         ))}

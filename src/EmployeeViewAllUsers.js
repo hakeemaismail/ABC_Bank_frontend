@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 export default function EmployeeViewUser() {
   const handleLogout = () => {
@@ -17,6 +19,7 @@ export default function EmployeeViewUser() {
     axios
       .get("http://localhost:8080/api/v1/auth/getUsers")
       .then((response) => {
+        console.log("res",response);
         setUsers(response.data);
       })
       .catch((error) => {
@@ -31,8 +34,23 @@ export default function EmployeeViewUser() {
       .delete(`http://localhost:8080/api/v1/auth/deleteUser/${id}`)
       .then(() => {
         console.log("deleted record");
-        alert("The record has been deleted");
-        window.location.href = "/employeeViewUser";
+        toast('The record has been deleted', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+             {
+              setTimeout(() => {
+                window.location.href = "/employeeViewUser";
+              }, 1000); 
+            } 
+          },
+          });
+        // alert("The record has been deleted");
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +76,7 @@ export default function EmployeeViewUser() {
       </header>
 
       <h2 className="text-4xl font-bold text-center py-4">User Accounts</h2>
-
+      <ToastContainer />
       <table className="table-auto mx-auto">
         <thead>
           <tr>

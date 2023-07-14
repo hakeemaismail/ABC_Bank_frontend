@@ -10,7 +10,6 @@ export default function AllAccounts() {
   };
 
   
-  const[accountID, setAccountID] = useState(-1);
   const[accounts, setAccounts] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();

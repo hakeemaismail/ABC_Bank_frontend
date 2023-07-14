@@ -2,46 +2,55 @@ import React, { useState } from "react";
 import axios from "axios";
 //import "./App.css";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useForm } from "react-hook-form";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  
   const navigate = useNavigate();
 
-  let data = {
-    email: email,
-    password: pass,
-  };
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+  
+    let dataExample = {
+      email: data.email,
+      password: data.password,
+    };
 
-    console.log("data", data);
-    try {
+      try {
       let res = await axios.post(
         "http://localhost:8080/api/v1/auth/authenticate",
-        data
+        dataExample
       );
       if (res.data.body.token) {
         const token = res.data.body.token;
-        console.log("user", res.data);
-        console.log("res", res);
+        
         localStorage.setItem("token", token);
         localStorage.setItem("data", res.data);
-        console.log("token", token);
-        
-        console.log(res.data.body.user);
-        console.log("role", res.data.body.user.roles[0].name);
 
-        alert("Login successful");
+        toast('Login successful!', {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+            if (res.data.body.user.roles[0].name === "User") {
+              setTimeout(() => {
+                navigate("/user");
+              }, 1000); 
+            } else {
+              setTimeout(() => {
+                navigate("/employeeViewUser");
+              }, 1000); 
+            }
+          },
+          });
 
-        if(res.data.body.user.roles[0].name == "User" ){
-           window.location.href = "/user";
-        }
-        else{
-          window.location.href = "/employeeViewUser"
-        }
-        
       } else {
         alert("Invalid credentials");
       }
@@ -50,28 +59,31 @@ export const Login = () => {
     }
   };
 
+
+
   return (
+    
     <div className="App">
+      <ToastContainer />
       <div className="auth-form-container">
         <h2>ABC Bank</h2>
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="email">email</label>
           <input
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+             name="email"
+             {...register("email")}
             type="email"
             placeholder="youremail@gmail.com"
             id="email"
-            name="email"
+            
           />
           <label htmlFor="password">password</label>
           <input
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
+             name="password"
+             {...register("password")}
             type="password"
             placeholder="********"
             id="password"
-            name="password"
           />
           <button type="submit">Log In</button>
         </form>
