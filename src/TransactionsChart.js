@@ -3,9 +3,10 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Pie } from 'react-chartjs-2';
 
 
-const LineChart = () => {
+const PieChart = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -27,17 +28,38 @@ useEffect(() => {
       });
   }, [accountID]);
 
-const data = {
-  labels: transactions.map((data) => data.transID),
-  datasets: [
-    {
-      label: "Account Balance",
-      backgroundColor: "rgb(255, 99, 132)",
-      borderColor: "rgb(255, 99, 132)",
-      data: transactions.map((data) => data.balance),
-    },
-  ],
-};
+  const data = 
+
+  {
+    labels: [ 'Deposits',
+    'Withdrawals',
+    'Transfers'],
+    datasets: [  
+      {
+        label: 'Transactions',
+        data: [transactions.filter(transaction => transaction.type === 'DEPOSIT').length,
+        transactions.filter(transaction => transaction.type === 'WITHDRAWAL').length,
+        transactions.filter(transaction => transaction.type === 'TRANSFER').length,],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
   return (
     <div>
@@ -59,10 +81,10 @@ const data = {
         </button>
       </header>
       <div style={{ width: "100%", maxWidth: "400px", height: "auto" }}>
-      <Line data={data} />
+      <Pie data={data} />
       </div>
     </div>
   );
 };
 
-export default LineChart;
+export default PieChart;

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
 export default function Transactions() {
   const handleLogout = () => {
@@ -14,20 +15,20 @@ export default function Transactions() {
   const { accountID } = useParams();
   const [transactions, setTransactions] = useState([]);
 
-  const getTransactions=()=>{
+  const getTransactions = () => {
     axios
-    .get(
-      `http://localhost:8080/api/v1/viewTransactionsOfASpecificUser/${accountID}`
-    )
-    .then((response) => {
-      setTransactions(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+      .get(
+        `http://localhost:8080/api/v1/viewTransactionsOfASpecificUser/${accountID}`
+      )
+      .then((response) => {
+        setTransactions(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   useEffect(() => {
-    getTransactions()
+    getTransactions();
   }, [accountID]);
 
   const data = {
@@ -42,8 +43,41 @@ export default function Transactions() {
     ],
   };
 
+  const Piedata = {
+    labels: ["Deposits", "Withdrawals", "Transfers"],
+    datasets: [
+      {
+        label: "Transactions",
+        data: [
+          transactions.filter((transaction) => transaction.type === "DEPOSIT")
+            .length,
+          transactions.filter(
+            (transaction) => transaction.type === "WITHDRAWAL"
+          ).length,
+          transactions.filter((transaction) => transaction.type === "TRANSFER")
+            .length,
+        ],
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.2)",
+          "rgba(54, 162, 235, 0.2)",
+          "rgba(255, 206, 86, 0.2)",
+          "rgba(75, 192, 192, 0.2)",
+          "rgba(153, 102, 255, 0.2)",
+          "rgba(255, 159, 64, 0.2)",
+        ],
+        borderColor: [
+          "rgba(255, 99, 132, 1)",
+          "rgba(54, 162, 235, 1)",
+          "rgba(255, 206, 86, 1)",
+          "rgba(75, 192, 192, 1)",
+          "rgba(153, 102, 255, 1)",
+          "rgba(255, 159, 64, 1)",
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
 
-  
   const handleGeneratePDF = () => {
     axios
       .get(`http://localhost:8080/api/v1/generatePDF/${accountID}`, {
@@ -113,9 +147,17 @@ export default function Transactions() {
         </tbody>
       </table>
 
-      <div className="flex justify-center"
-        style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <Line data={data} />
+
+        <div>
+
+        </div>
+        <div className="flex justify-center space-x-8" style={{ maxWidth: "800px", margin: "0 auto" }}>
+        <div style={{ width: "50%" }}>
+          <Line data={data} />
+        </div>
+        <div style={{ width: "50%" }}>
+          <Pie data={Piedata} />
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"
+import "react-toastify/dist/ReactToastify.css";
 
 export default function User() {
   const handleLogout = () => {
@@ -42,6 +42,8 @@ export default function User() {
         },
       })
       .then((response) => {
+        console.log("array", response.data);
+        // const myArray = response.data;
         setAccounts(response.data);
       })
       .catch((error) => {
@@ -62,7 +64,7 @@ export default function User() {
         // alert("The amount has been deposited");
         // window.location.href = "/user";
 
-        toast('The amount has been deposited', {
+        toast("The amount has been deposited", {
           position: "top-right",
           hideProgressBar: false,
           closeOnClick: true,
@@ -71,17 +73,17 @@ export default function User() {
           progress: undefined,
           theme: "light",
           onClose: () => {
-             {
+            {
               setTimeout(() => {
                 window.location.href = "/user";
-              }, 1000); 
-            } 
+              }, 1000);
+            }
           },
-          });
+        });
       })
       .catch((error) => {
         console.log(error);
-        toast('An error has occurred', {
+        toast("An error has occurred", {
           position: "top-right",
           hideProgressBar: false,
           closeOnClick: true,
@@ -90,13 +92,13 @@ export default function User() {
           progress: undefined,
           theme: "light",
           onClose: () => {
-             {
+            {
               setTimeout(() => {
                 window.location.href = "/user";
-              }, 1000); 
-            } 
+              }, 1000);
+            }
           },
-          });
+        });
       });
 
     setDepositModalOpen(false);
@@ -109,21 +111,21 @@ export default function User() {
 
     let data = {
       accountBalance: accountBalance,
-      type: accountType
+      type: accountType,
     };
 
     axios
-      .post("http://localhost:8080/api/v1/createAccount", data,{
+      .post("http://localhost:8080/api/v1/createAccount", data, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
           Authorization: "Bearer " + token,
         },
-      } )
+      })
       .then((response) => {
         console.log(response.data);
         //alert("The account has been created");
-        toast('Account has been created', {
+        toast("Account has been created", {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -134,12 +136,12 @@ export default function User() {
           theme: "light",
           onClose: () => {
             {
-             setTimeout(() => {
-               window.location.href = "/user";
-             }, 1000); 
-           } 
-         },
-          });
+              setTimeout(() => {
+                window.location.href = "/user";
+              }, 1000);
+            }
+          },
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -169,7 +171,7 @@ export default function User() {
         // alert("The amount has been transferred");
         // window.location.href = "/user";
 
-        toast('The amount has been transferred', {
+        toast("The amount has been transferred", {
           position: "top-right",
           hideProgressBar: false,
           closeOnClick: true,
@@ -178,13 +180,13 @@ export default function User() {
           progress: undefined,
           theme: "light",
           onClose: () => {
-             {
+            {
               setTimeout(() => {
                 window.location.href = "/user";
-              }, 1000); 
-            } 
+              }, 1000);
+            }
           },
-          });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -210,7 +212,7 @@ export default function User() {
         // alert("The amount has been withdrawn");
         // window.location.href = "/user";
 
-        toast('The amount has been withdrawn', {
+        toast("The amount has been withdrawn", {
           position: "top-right",
           hideProgressBar: false,
           closeOnClick: true,
@@ -219,13 +221,13 @@ export default function User() {
           progress: undefined,
           theme: "light",
           onClose: () => {
-             {
+            {
               setTimeout(() => {
                 window.location.href = "/user";
-              }, 1000); 
-            } 
+              }, 1000);
+            }
           },
-          });
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -262,11 +264,8 @@ export default function User() {
           Logout
         </button>
       </header>
-
       <h2 className="text-4xl font-bold text-center py-4">All Accounts</h2>
-      
       <ToastContainer />
-
       <div className="flex justify-center">
         {accounts.map((account) => (
           <div
@@ -334,6 +333,7 @@ export default function User() {
           </div>
         ))}
       </div>
+      
 
       {isDepositModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
@@ -362,7 +362,6 @@ export default function User() {
           </div>
         </div>
       )}
-
       {isWithdrawModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-gray-800 bg-opacity-75 absolute inset-0"></div>
@@ -390,7 +389,6 @@ export default function User() {
           </div>
         </div>
       )}
-
       {isTransferModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-gray-800 bg-opacity-75 absolute inset-0"></div>
@@ -424,7 +422,6 @@ export default function User() {
           </div>
         </div>
       )}
-
       {isCreateModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-10">
           <div className="bg-gray-800 bg-opacity-75 absolute inset-0"></div>

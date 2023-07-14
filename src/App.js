@@ -10,7 +10,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import AllAccounts from "./EmployeeViewAllAccounts";
 import Transactions from "./Transactions";
 import EmployeeViewUser from "./EmployeeViewAllUsers";
-import LineChart from "./TransactionsChart";
+//import LineChart from "./TransactionsChart";
+import PieChart from "./TransactionsChart";
 
 function App() {
   
@@ -26,7 +27,7 @@ function App() {
             <Route path="/employeeViewUser" element={<EmployeeViewUser />}/>
             <Route path="/transact/:accountID" element={<Transactions />} />
             <Route path="/allAccounts/:id" element={<AllAccounts />}/>
-            <Route path="/transactionChart/:accountID" element={<LineChart />} />
+            <Route path="/transactionChart/:accountID" element={<PieChart/>} />
           </Routes>
         </div>
        
